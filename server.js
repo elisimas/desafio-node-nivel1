@@ -12,6 +12,47 @@ function calcularAreaPerimetro(lado) {
     return perimetro;
 }
 
+function calcularPerimetroPor(figuraPlana) {
+    var resultado = [];
+    figuraPlana.forEach((poligono, indice) => {
+        switch (poligono.objeto.toUpperCase()) {
+            case 'TRIANGULO':
+                var calculaPerimetro = poligono.lados.reduce((total, num) => total + num);
+                var objetoRetorno = {
+                    "objeto": poligono.objeto,
+                    "lados": poligono.lados,
+                    "resultado": calculaPerimetro
+                };
+                resultado.push(objetoRetorno);
+                break;
+            case 'RETANGULO':
+                var calculaPerimetro = poligono.lados
+                    .reduce(
+                        (total, num) => (total * 2) + (num * 2)
+                    );
+                var objetoRetorno = {
+                    "objeto": poligono.objeto,
+                    "lados": poligono.lados,
+                    "resultado": calculaPerimetro
+                };
+                resultado.push(objetoRetorno);
+                break;
+            case 'QUADRADO':
+                var calculaPerimetro = poligono.lados[0] * 4
+                var objetoRetorno = {
+                    "objeto": poligono.objeto,
+                    "lados": poligono.lados,
+                    "resultado": calculaPerimetro
+                };
+                resultado.push(objetoRetorno);
+                break;
+            default:
+                break;
+        }
+    });
+    return resultado;
+}
+
 const server = restify.createServer({
     name: 'Server Node',
     version: '1.0.0'
@@ -21,12 +62,7 @@ server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.bodyParser());
 
-server.post('/perimetro/:lado', function(req, res, next) {
-    res.send(req.params);
-    return next();
-});
-
-server.get('/quadrado/:ladoa/:ladob', function(req, res, next) {
+server.get('/quadrado/:ladoa/:ladob', function (req, res, next) {
     var results = calcularAreaQuadrado(req.params.ladoa, req.params.ladob);
     req.accepts('application/json');
     res.contentType = 'json';
@@ -34,6 +70,12 @@ server.get('/quadrado/:ladoa/:ladob', function(req, res, next) {
     return next();
 });
 
-server.listen(8080, function() {
+server.post('/perimetro', function (req, res, next) {
+    var result = calcularPerimetroPor(req.body);
+    res.send(result);
+    return next();
+});
+
+server.listen(8080, function () {
     console.log('%s listening at %s', server.name, server.url);
 });
