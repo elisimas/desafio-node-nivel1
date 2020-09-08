@@ -1,0 +1,27 @@
+{
+  "name": "calcula-area-api",
+  "version": "1.0.0",
+  "description": "solução do desafio proposto que calcula a area do poligono proposto",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elisimas/desafio-node-nivel1.git"
+  },
+  "keywords": [
+    "node",
+    "restify",
+    "api"
+  ],
+  "author": "Eliana Simas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elisimas/desafio-node-nivel1/issues"
+  },
+  "homepage": "https://github.com/elisimas/desafio-node-nivel1#readme",
+  "dependencies": {
+    "restify": "^8.5.1"
+  }
+}
